@@ -4,11 +4,11 @@ const spotifyApi = new SpotifyWebApi();
 
 export default {
   getPlaylist: function() {
-    return axios.get("/api/playlist");
+    return axios.get("/api/playlists");
   },
 
   removePlaylist: function(id) {
-    return axios.delete("/api/playlists/" + id);
+    return axios.delete("/api/playlists" + id);
   },
 
   savePlaylist: function(playlistData) {
