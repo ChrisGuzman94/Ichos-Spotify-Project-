@@ -29,10 +29,10 @@ export default {
       });
   },
 
-  search: function(token) {
+  search: function(string, token) {
     console.log(token);
     spotifyApi.setAccessToken(token);
-    return spotifyApi.searchPlaylists("workout").then(
+    return spotifyApi.searchPlaylists(string).then(
       res => {
         return res;
       },

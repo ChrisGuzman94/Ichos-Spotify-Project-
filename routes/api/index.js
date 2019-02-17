@@ -1,6 +1,6 @@
 const router = require("express").Router();
-const plaaylistRoutes = require("./playlists");
+const playlistRoutes = require("./playlists");
 
-router.use("/playlists", plaaylistRoutes);
+router.use("/playlists", playlistRoutes);
 
 module.exports = router;

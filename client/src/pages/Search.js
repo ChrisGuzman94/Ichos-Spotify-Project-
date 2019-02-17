@@ -1,68 +1,67 @@
 import React, { Component } from "react";
 import SearchBar from "../components/SearchBar/index";
-import Books from "../components/Books/index";
-import API from "../utils/API";
-import Button from "../components/Buttons/Save";
+import Geocode from "react-geocode";
 
-const book = require("google-books-search-2");
+Geocode.setApiKey("AIzaSyAP-ebktertPkIo8aeeBLjqpGkwbbOrvno");
 
-class App extends Component {
-  state = {
-    savedBooks: [],
-    books: [],
-    search: ""
+class Geo extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      lat: "",
+      lon: "",
+      address: ""
+    };
+  }
+
+  componentDidMount = () => {
+    if (!navigator.geolocation) {
+      console.log("<p>Geolocation is not supported by your browser</p>");
+      return;
+    }
+
+    const success = position => {
+      const latitude = position.coords.latitude;
+      const longitude = position.coords.longitude;
+      console.log(
+        "<p>Latitude is " +
+          latitude +
+          "° <br>Longitude is " +
+          longitude +
+          "°</p>"
+      );
+      this.setState({ lat: latitude, lon: longitude });
+    };
+
+    const error = () => {
+      console.log("Unable to retrieve your location");
+    };
+
+    console.log("<p>Locating…</p>");
+    navigator.geolocation.getCurrentPosition(success, error);
   };
 
-  handleInputChange = event => {
-    this.setState({ search: event.target.value });
-  };
-
-  handleFormSubmit = event => {
-    event.preventDefault();
-    book
-      .search(this.state.search)
-      .then(res => this.setState({ books: res }))
-      .catch(error => console.log(error));
-  };
-
-  handleSave = book => {
-    console.log("test");
-    const { thumbnail, title, description, previewLink, authors } = book;
-
-    API.saveBook({
-      title: title,
-      authors: authors,
-      description: description,
-      image: thumbnail,
-      link: previewLink
-    });
+  geolocate = () => {
+    Geocode.fromLatLng(this.state.lat, this.state.lon).then(
+      response => {
+        const responseAddress =
+          response.results[0].address_components[2].long_name;
+        console.log(response.results[0].address_components[2].long_name);
+        this.setState({ address: responseAddress });
+      },
+      error => {
+        console.error(error);
+      }
+    );
   };
 
   render() {
-    const { books } = this.state;
     return (
       <React.Fragment>
-        <SearchBar
-          handleFormSubmit={this.handleFormSubmit}
-          handleInputChange={this.handleInputChange}
-        />
-        {books.map(b => (
-          <React.Fragment>
-            <div className="col-md-3">
-              <Books
-                img={b.thumbnail}
-                title={b.title}
-                description={b.description}
-                link={b.previewLink}
-                authors={b.authors}
-              />
-              <Button handleSave={() => this.handleSave(b)} />
-            </div>
-          </React.Fragment>
-        ))}
+        <SearchBar geolocate={this.geolocate} />
       </React.Fragment>
     );
   }
 }
 
-export default App;
+export default Geo;

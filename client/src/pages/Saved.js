@@ -1,20 +1,21 @@
 import React, { Component } from "react";
 import API from "../utils/API";
 import Delete from "../components/Buttons/Delete";
+import Playlist from "../components/Playlist";
 
-class Saved extends Component {
+export default class Saved extends Component {
   state = {
-    books: []
+    playlist: []
   };
 
   componentDidMount() {
-    this.savedBooks();
-    console.log(this.state.books);
+    this.savedPlaylist();
+    console.log(this.state.playlist);
   }
 
-  savedBooks = () => {
-    API.getBooks()
-      .then(res => this.setState({ books: res.data }))
+  savedPlaylist = () => {
+    API.getPlaylist()
+      .then(res => this.setState({ playlist: res.data }))
       .catch(err => console.log(err));
   };
 
@@ -26,26 +27,21 @@ class Saved extends Component {
   };
 
   render() {
-    const { books } = this.state;
+    const { playlist } = this.state;
     return (
-      <React.Fragment>
-        {/* {books.map(b => (
-          <React.Fragment>
-            <Books
-              id={b._id}
-              key={b._id}
-              title={b.title}
-              description={b.description}
-              link={b.previewLink}
-              img={b.image}
-              authors={b.authors}
-            />
-            <Delete handleDelete={() => this.handleDelete(b._id)} />
-          </React.Fragment>
-        ))} */}
-      </React.Fragment>
+      <div className="App">
+        {this.state.playlist.map(playlist => {
+          return (
+            <div>
+              <Playlist
+                key={playlist.id}
+                id={playlist.id}
+                name={playlist.name}
+              />
+            </div>
+          );
+        })}
+      </div>
     );
   }
 }
-
-export default Saved;
