@@ -1,7 +1,10 @@
 import React, { Component } from "react";
-import API from "../utils/API";
-import Playlist from "../components/Playlist/index";
 import Geocode from "react-geocode";
+import API from "../utils/API";
+import { Row, Col } from "react-grid-system";
+import Tracks from "../components/Tracks/index";
+import SpotifyWebApi from "spotify-web-api-js";
+Geocode.setApiKey("AIzaSyAP-ebktertPkIo8aeeBLjqpGkwbbOrvno");
 export default class Home extends Component {
   constructor() {
     super();
@@ -10,17 +13,19 @@ export default class Home extends Component {
     this.state = {
       token: token,
       loggedIn: token ? true : false,
-      playlists: [],
+      hideTracks: true,
+      tracks: [],
+      playlistName: "",
+      addTracks: [],
+      address: "",
       lat: "",
-      lon: "",
-      address: ""
+      lon: ""
     };
   }
 
   componentDidMount = () => {
     if (!navigator.geolocation) {
       console.log("<p>Geolocation is not supported by your browser</p>");
-      return;
     }
 
     const success = position => {
@@ -41,7 +46,6 @@ export default class Home extends Component {
     };
 
     console.log("<p>Locating…</p>");
-
     navigator.geolocation.getCurrentPosition(success, error);
   };
 
@@ -50,15 +54,13 @@ export default class Home extends Component {
       response => {
         const responseAddress =
           response.results[0].address_components[2].long_name;
-        console.log(response.results[0].address_components[2].long_name);
-        this.setState({ address: responseAddress });
+        this.search(responseAddress);
       },
       error => {
         console.error(error);
       }
     );
   };
-
   getHashParams() {
     var hashParams = {};
     var e,
@@ -71,43 +73,98 @@ export default class Home extends Component {
     }
     return hashParams;
   }
-  search() {
-    API.search("paris", this.state.token).then(res =>
-      this.setState({ playlists: res.playlists.items })
+  search(address) {
+    const allTracks = [];
+    API.search(address, this.state.token).then(res =>
+      res.playlists.items.map(playlist => {
+        API.getTracks(playlist.id, this.state.token).then(res => {
+          res.items.map(item => {
+            const trackInfo = {
+              name: item.track.name,
+              uri: item.track.uri
+            };
+            allTracks.push(trackInfo);
+            this.setState({ tracks: allTracks });
+          });
+        });
+      })
     );
   }
-  follow(playlist) {
-    const { id, name, images } = playlist;
-    API.follow(id, this.state.token);
-    API.savePlaylist({
-      id: id,
-      name: name,
-      imageUrl: images[0].url
+  handleInputChange = event => {
+    // Getting the value and name of the input which triggered the change
+    let value = event.target.value;
+    const playlistName = event.target.name;
+
+    this.setState({
+      [playlistName]: value
     });
-  }
+  };
+  addTrack = (name, uri) => {
+    console.log(name);
+    console.log(uri);
+    const trackInfo = {
+      trackName: name,
+      trackUri: uri
+    };
+    const add = this.state.addTracks;
+    add.push(trackInfo);
+    this.setState({ addTracks: add });
+  };
+  saveTrack = uri => {
+    console.log(uri);
+    API.saveTrack(uri, this.state.token);
+  };
+
+  handleFormSubmit = () => {
+    API.create(this.state.playlistName, this.state.addTracks, this.state.token);
+  };
+
   render() {
     return (
       <div className="App">
         <a href="http://localhost:8888"> Login to Spotify </a>
         <a href="/saved">Followed Playlist</a>
+        <Row>
+          <Col md={6}>
+            {this.state.tracks.map(track => {
+              return (
+                <Tracks
+                  addTrack={() => this.addTrack(track.name, track.uri)}
+                  saveTrack={() => this.saveTrack(track.uri)}
+                  name={track.name}
+                />
+              );
+            })}
+          </Col>
 
-        {this.state.playlists.map(playlist => {
-          return (
+          <Col md={6}>
             <div>
-              <Playlist
-                key={playlist.id}
-                img={playlist.images[0].url}
-                name={playlist.name}
-              />
-
-              <button onClick={() => this.follow(playlist)}>follow</button>
+              <p>Create your own playlist</p>
+              <form className="form">
+                <input
+                  value={this.state.playlistName}
+                  name="playlistName"
+                  onChange={this.handleInputChange}
+                  type="text"
+                  placeholder="Playlist Name"
+                />
+              </form>
+              <button onClick={this.handleFormSubmit}>Create Playlist</button>
+              {this.state.addTracks.map(track => {
+                return (
+                  <ul>
+                    <span>x </span>
+                    {track.trackName}
+                  </ul>
+                );
+              })}
             </div>
-          );
-        })}
+          </Col>
+        </Row>
 
         {this.state.loggedIn && (
           <div>
-            <button onClick={() => this.search()}>search</button>
+            <button onClick={() => this.geolocate()}>search</button>
           </div>
         )}
       </div>

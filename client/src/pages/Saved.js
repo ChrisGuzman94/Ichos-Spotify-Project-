@@ -1,7 +1,5 @@
 import React, { Component } from "react";
 import API from "../utils/API";
-import Delete from "../components/Buttons/Delete";
-import Playlist from "../components/Playlist";
 
 export default class Saved extends Component {
   state = {
@@ -27,19 +25,10 @@ export default class Saved extends Component {
   };
 
   render() {
-    const { playlist } = this.state;
     return (
       <div className="App">
         {this.state.playlist.map(playlist => {
-          return (
-            <div>
-              <Playlist
-                key={playlist.id}
-                id={playlist.id}
-                name={playlist.name}
-              />
-            </div>
-          );
+          return <div>hello</div>;
         })}
       </div>
     );
