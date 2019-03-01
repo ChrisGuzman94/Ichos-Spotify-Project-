@@ -6,6 +6,24 @@ const spotifyApi = new SpotifyWebApi();
 const spotifyApiNode = new SpotifyWebApiNode();
 
 export default {
+  getEvents: function() {
+    axios({
+      type: "GET",
+      url:
+        "https://app.ticketmaster.com/discovery/v2/events?apikey=woMueZEfZnQKLvy0XySwE4my1A4XKu3G&countryCode=US",
+      async: true,
+      dataType: "json",
+      success: function(json) {
+        JSON.parse(json);
+        console.log(json);
+        // Parse the response.
+        // Do other things.
+      },
+      error: function(xhr, status, err) {
+        // This time, we do not end up here!
+      }
+    });
+  },
   getPlaylist: function() {
     return axios.get("/api/playlists");
   },
@@ -39,11 +57,11 @@ export default {
       }
     );
   },
-  saveTrack: function(uri, token) {
-    spotifyApi.setAccessToken(token);
-    spotifyApi.addToMySavedTracks(["3VNWq8rTnQG6fM1eldSpZ0"]).then(
-      function(data) {
-        console.log("Added track!");
+  saveTrack: function(id, token) {
+    spotifyApiNode.setAccessToken(token);
+    spotifyApiNode.addToMySavedTracks([id]).then(
+      function(res) {
+        console.log(res);
       },
       function(err) {
         console.log("Something went wrong!", err);

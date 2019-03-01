@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import Geocode from "react-geocode";
 import API from "../utils/API";
-import { Row, Col } from "react-grid-system";
+
 import Tracks from "../components/Tracks/index";
 import SpotifyWebApi from "spotify-web-api-js";
 Geocode.setApiKey("AIzaSyAP-ebktertPkIo8aeeBLjqpGkwbbOrvno");
@@ -74,6 +74,8 @@ export default class Home extends Component {
     return hashParams;
   }
   search(address) {
+    API.getEvents();
+
     const allTracks = [];
     API.search(address, this.state.token).then(res =>
       res.playlists.items.map(playlist => {
@@ -81,7 +83,8 @@ export default class Home extends Component {
           res.items.map(item => {
             const trackInfo = {
               name: item.track.name,
-              uri: item.track.uri
+              uri: item.track.uri,
+              id: item.track.id
             };
             allTracks.push(trackInfo);
             this.setState({ tracks: allTracks });
@@ -110,9 +113,9 @@ export default class Home extends Component {
     add.push(trackInfo);
     this.setState({ addTracks: add });
   };
-  saveTrack = uri => {
-    console.log(uri);
-    API.saveTrack(uri, this.state.token);
+  saveTrack = id => {
+    console.log(id);
+    API.saveTrack(id, this.state.token);
   };
 
   handleFormSubmit = () => {
@@ -130,7 +133,7 @@ export default class Home extends Component {
               return (
                 <Tracks
                   addTrack={() => this.addTrack(track.name, track.uri)}
-                  saveTrack={() => this.saveTrack(track.uri)}
+                  saveTrack={() => this.saveTrack(track.id)}
                   name={track.name}
                 />
               );

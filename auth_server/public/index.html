@@ -119,6 +119,7 @@
                   
                 },
                 success: function(response) {
+                  
                   userProfilePlaceholder.innerHTML = userProfileTemplate(response);
 
                   $('#login').hide();
@@ -133,12 +134,12 @@
           document.getElementById('login-button').addEventListener('click', function() {
 
             var client_id = ''; // Your client id
-            var redirect_uri = ''; // Your redirect uri
+            var redirect_uri = 'http://localhost:3000'; // Your redirect uri
 
             var state = generateRandomString(16);
 
             localStorage.setItem(stateKey, state);
-            var scope = 'playlist-modify-private playlist-modify-public';
+            var scope = 'playlist-modify-private playlist-modify-public user-library-modify';
 
             var url = 'https://accounts.spotify.com/authorize';
             url += '?response_type=token';
