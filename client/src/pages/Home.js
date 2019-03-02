@@ -1,9 +1,10 @@
 import React, { Component } from "react";
 import Geocode from "react-geocode";
 import API from "../utils/API";
-
+import { Row, Col } from "react-grid-system";
 import Tracks from "../components/Tracks/index";
-import SpotifyWebApi from "spotify-web-api-js";
+import Events from "../components/Events/index";
+
 Geocode.setApiKey("AIzaSyAP-ebktertPkIo8aeeBLjqpGkwbbOrvno");
 export default class Home extends Component {
   constructor() {
@@ -17,6 +18,7 @@ export default class Home extends Component {
       tracks: [],
       playlistName: "",
       addTracks: [],
+      events: [],
       address: "",
       lat: "",
       lon: ""
@@ -39,6 +41,7 @@ export default class Home extends Component {
           "°</p>"
       );
       this.setState({ lat: latitude, lon: longitude });
+      API.getEvents().then(res => this.setState({ events: res }));
     };
 
     const error = () => {
@@ -74,8 +77,6 @@ export default class Home extends Component {
     return hashParams;
   }
   search(address) {
-    API.getEvents();
-
     const allTracks = [];
     API.search(address, this.state.token).then(res =>
       res.playlists.items.map(playlist => {
@@ -103,23 +104,31 @@ export default class Home extends Component {
     });
   };
   addTrack = (name, uri) => {
-    console.log(name);
-    console.log(uri);
     const trackInfo = {
       trackName: name,
       trackUri: uri
     };
+
     const add = this.state.addTracks;
     add.push(trackInfo);
+
     this.setState({ addTracks: add });
   };
   saveTrack = id => {
     console.log(id);
     API.saveTrack(id, this.state.token);
   };
+  saveEvent = event => {
+    API;
+  };
 
   handleFormSubmit = () => {
     API.create(this.state.playlistName, this.state.addTracks, this.state.token);
+  };
+
+  remove = track => {
+    const filteredOut = this.state.addTracks.filter(word => word !== track);
+    this.setState({ addTracks: filteredOut });
   };
 
   render() {
@@ -156,7 +165,7 @@ export default class Home extends Component {
               {this.state.addTracks.map(track => {
                 return (
                   <ul>
-                    <span>x </span>
+                    <button onClick={() => this.remove(track)}>x </button>
                     {track.trackName}
                   </ul>
                 );
@@ -170,6 +179,22 @@ export default class Home extends Component {
             <button onClick={() => this.geolocate()}>search</button>
           </div>
         )}
+
+        <Row>
+          {this.state.events.map(event => {
+            return (
+              <Col>
+                <Events
+                  saveEvent={this.saveEvent(event.name, event.images[0].url)}
+                  name={event.name}
+                  url={event.images[0].url}
+                  link={event.url}
+                />
+                ;
+              </Col>
+            );
+          })}
+        </Row>
       </div>
     );
   }

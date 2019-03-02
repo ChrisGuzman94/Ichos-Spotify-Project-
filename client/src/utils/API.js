@@ -7,22 +7,14 @@ const spotifyApiNode = new SpotifyWebApiNode();
 
 export default {
   getEvents: function() {
-    axios({
-      type: "GET",
-      url:
-        "https://app.ticketmaster.com/discovery/v2/events?apikey=woMueZEfZnQKLvy0XySwE4my1A4XKu3G&countryCode=US",
-      async: true,
-      dataType: "json",
-      success: function(json) {
-        JSON.parse(json);
-        console.log(json);
-        // Parse the response.
-        // Do other things.
-      },
-      error: function(xhr, status, err) {
-        // This time, we do not end up here!
-      }
-    });
+    return axios
+      .get(
+        "https://app.ticketmaster.com/discovery/v2/events?apikey=&countryCode=US"
+      )
+      .then(res => {
+        console.log(res.data);
+        return res.data._embedded.events;
+      });
   },
   getPlaylist: function() {
     return axios.get("/api/playlists");
@@ -32,8 +24,8 @@ export default {
     return axios.delete("/api/playlists" + id);
   },
 
-  savePlaylist: function(playlistData) {
-    return axios.post("/api/playlists", playlistData);
+  savePlaylist: function(eventData) {
+    return axios.post("/api/playlists", eventData);
   },
   search: function(string, token) {
     spotifyApi.setAccessToken(token);
