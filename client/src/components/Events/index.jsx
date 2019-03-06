@@ -15,7 +15,6 @@ class Events extends Component {
         <p>
           <a href={this.props.link}>See Event</a>
         </p>
-        <button onClick={this.props.saveEvent}>Save</button>
       </React.Fragment>
     );
   }

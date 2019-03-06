@@ -21,7 +21,8 @@ export default {
   },
 
   removePlaylist: function(id) {
-    return axios.delete("/api/playlists" + id);
+    console.log(id);
+    return axios.delete("/api/playlists/" + id);
   },
 
   saveEvent: function(eventData) {

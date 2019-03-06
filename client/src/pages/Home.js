@@ -146,7 +146,8 @@ export default class Home extends Component {
   render() {
     return (
       <div className="App">
-        <a href="https://authorizatio.herokuapp.com/"> Login to Spotify </a>
+        <a href="http://localhost:8000/"> Login to Spotify </a>
+        <a href="/saved"> Saved Events </a>
         <Row>
           <Col md={6}>
             {this.state.tracks.map(track => {
@@ -202,13 +203,17 @@ export default class Home extends Component {
             return (
               <Col>
                 <Events
-                  saveEvent={() =>
-                    this.saveEvent(event.name, event.images[0].url, event.url)
-                  }
                   name={event.name}
                   url={event.images[0].url}
                   link={event.url}
                 />
+                <button
+                  onClick={() =>
+                    this.saveEvent(event.name, event.images[0].url, event.url)
+                  }
+                >
+                  Save
+                </button>
                 ;
               </Col>
             );
