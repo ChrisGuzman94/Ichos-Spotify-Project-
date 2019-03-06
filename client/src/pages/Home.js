@@ -143,8 +143,7 @@ export default class Home extends Component {
   render() {
     return (
       <div className="App">
-        <a href="http://localhost:8888"> Login to Spotify </a>
-        <a href="/saved">Followed Playlist</a>
+        <a href="https://authorizatio.herokuapp.com/"> Login to Spotify </a>
         <Row>
           <Col md={6}>
             {this.state.tracks.map(track => {
@@ -190,7 +189,7 @@ export default class Home extends Component {
 
         {this.state.loggedIn && (
           <div>
-            <button onClick={() => this.geolocate()}>search</button>
+            <button onClick={() => this.search()}>search</button>
           </div>
         )}
 
