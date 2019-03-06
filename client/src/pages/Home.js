@@ -41,7 +41,6 @@ export default class Home extends Component {
           "°</p>"
       );
       this.setState({ lat: latitude, lon: longitude });
-      API.getEvents().then(res => this.setState({ events: res }));
     };
 
     const error = () => {
@@ -121,6 +120,10 @@ export default class Home extends Component {
     console.log(id);
     API.saveTrack(id, this.state.token);
   };
+
+  getEvents = () => {
+    API.getEvents().then(res => this.setState({ events: res }));
+  };
   saveEvent = (name, image, url) => {
     const data = {
       name: name,
@@ -143,7 +146,7 @@ export default class Home extends Component {
   render() {
     return (
       <div className="App">
-        <a href="https://authorizatio.herokuapp.com/"> Login to Spotify </a>
+        <a href="https://metemano.herokuapp.com/"> Login to Spotify </a>
         <Row>
           <Col md={6}>
             {this.state.tracks.map(track => {
@@ -189,7 +192,8 @@ export default class Home extends Component {
 
         {this.state.loggedIn && (
           <div>
-            <button onClick={() => this.search()}>search</button>
+            <button onClick={() => this.search()}>Music</button>
+            <button onClick={() => this.getEvents()}>Events</button>
           </div>
         )}
 
