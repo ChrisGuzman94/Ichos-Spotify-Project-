@@ -146,7 +146,7 @@ export default class Home extends Component {
   render() {
     return (
       <div className="App">
-        <a href="https://metemano.herokuapp.com/"> Login to Spotify </a>
+        <a href="https://authorizatio.herokuapp.com/"> Login to Spotify </a>
         <Row>
           <Col md={6}>
             {this.state.tracks.map(track => {
