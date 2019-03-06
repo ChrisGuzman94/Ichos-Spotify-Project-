@@ -82,13 +82,16 @@ export default class Home extends Component {
       res.playlists.items.map(playlist => {
         API.getTracks(playlist.id, this.state.token).then(res => {
           res.items.map(item => {
-            const trackInfo = {
-              name: item.track.name,
-              uri: item.track.uri,
-              id: item.track.id
-            };
-            allTracks.push(trackInfo);
-            this.setState({ tracks: allTracks });
+            API.trackPreview(item.track.id, this.state.token).then(res => {
+              const trackInfo = {
+                name: item.track.name,
+                uri: item.track.uri,
+                id: item.track.id,
+                preview: res
+              };
+              allTracks.push(trackInfo);
+              this.setState({ tracks: allTracks });
+            });
           });
         });
       })
@@ -118,8 +121,14 @@ export default class Home extends Component {
     console.log(id);
     API.saveTrack(id, this.state.token);
   };
-  saveEvent = event => {
-    API;
+  saveEvent = (name, image, url) => {
+    const data = {
+      name: name,
+      img: image,
+      link: url
+    };
+
+    API.saveEvent(data).then(res => console.log(res));
   };
 
   handleFormSubmit = () => {
@@ -140,11 +149,16 @@ export default class Home extends Component {
           <Col md={6}>
             {this.state.tracks.map(track => {
               return (
-                <Tracks
-                  addTrack={() => this.addTrack(track.name, track.uri)}
-                  saveTrack={() => this.saveTrack(track.id)}
-                  name={track.name}
-                />
+                <React.Fragment>
+                  <Tracks
+                    addTrack={() => this.addTrack(track.name, track.uri)}
+                    saveTrack={() => this.saveTrack(track.id)}
+                    name={track.name}
+                    preview={track.preview}
+                  />
+
+                  <audio controls src={track.preview} />
+                </React.Fragment>
               );
             })}
           </Col>
@@ -185,7 +199,9 @@ export default class Home extends Component {
             return (
               <Col>
                 <Events
-                  saveEvent={this.saveEvent(event.name, event.images[0].url)}
+                  saveEvent={() =>
+                    this.saveEvent(event.name, event.images[0].url, event.url)
+                  }
                   name={event.name}
                   url={event.images[0].url}
                   link={event.url}

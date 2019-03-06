@@ -21,11 +21,6 @@ export default function Nav() {
               Home
             </a>
           </li>
-          <li className="nav-item">
-            <a className="nav-link" href="/saved">
-              Book Library
-            </a>
-          </li>
         </ul>
       </div>
     </nav>

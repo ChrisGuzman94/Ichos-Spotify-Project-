@@ -9,7 +9,7 @@ export default {
   getEvents: function() {
     return axios
       .get(
-        "https://app.ticketmaster.com/discovery/v2/events?apikey=&countryCode=US"
+        "https://app.ticketmaster.com/discovery/v2/events?apikey=woMueZEfZnQKLvy0XySwE4my1A4XKu3G&countryCode=US"
       )
       .then(res => {
         console.log(res.data);
@@ -24,7 +24,8 @@ export default {
     return axios.delete("/api/playlists" + id);
   },
 
-  savePlaylist: function(eventData) {
+  saveEvent: function(eventData) {
+    console.log("hit api");
     return axios.post("/api/playlists", eventData);
   },
   search: function(string, token) {
@@ -48,6 +49,12 @@ export default {
         console.log("Something went wrong!", err);
       }
     );
+  },
+  trackPreview: function(trackId, token) {
+    spotifyApiNode.setAccessToken(token);
+    return spotifyApiNode.getTrack(trackId).then(res => {
+      return res.body.preview_url;
+    });
   },
   saveTrack: function(id, token) {
     spotifyApiNode.setAccessToken(token);

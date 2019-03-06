@@ -16,8 +16,7 @@ if (process.env.NODE_ENV === "production") {
 app.use(routes);
 
 // Connect to the Mongo DB
-var dbURI =
-  process.env.MONGODB_URI || "mongodb://localhost:27017/spotifyPlaylist";
+var dbURI = process.env.MONGODB_URI || "mongodb://localhost/spotifyPlaylist";
 
 mongoose.connect(dbURI, { useNewUrlParser: true });
 

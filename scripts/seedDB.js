@@ -7,17 +7,10 @@ mongoose.connect(
   process.env.MONGODB_URI || "mongodb://localhost/spotifyPlaylist"
 );
 
-const bookSeed = [
-  {
-    id: "mndn c dcmd c",
-    name: "playlist",
-    img: "image url",
-    link: "link"
-  }
-];
+const playlistSeed = [{ name: "playlist", img: "image url", link: "link" }];
 
 db.Book.remove({})
-  .then(() => db.Book.collection.insertMany(bookSeed))
+  .then(() => db.Playlist.collection.insert(playlistSeed))
   .then(data => {
     console.log(data.result.n + " records inserted!");
     process.exit(0);

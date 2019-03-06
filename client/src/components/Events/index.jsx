@@ -13,7 +13,7 @@ class Events extends Component {
         <img style={this.state.style} src={this.props.url} alt="" />
         <p>Event:{this.props.name}</p>
         <p>
-          <a href={this.props.url}>See Event</a>
+          <a href={this.props.link}>See Event</a>
         </p>
         <button onClick={this.props.saveEvent}>Save</button>
       </React.Fragment>
