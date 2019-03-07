@@ -140,7 +140,7 @@ export default class Home extends Component {
       this.state.addTracks,
       this.state.token
     ).then(res => {
-      window.location.reload;
+      this.setState({ addTracks: [] });
     });
   };
 
