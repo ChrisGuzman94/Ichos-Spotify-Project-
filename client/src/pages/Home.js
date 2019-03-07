@@ -135,7 +135,13 @@ export default class Home extends Component {
   };
 
   handleFormSubmit = () => {
-    API.create(this.state.playlistName, this.state.addTracks, this.state.token);
+    API.create(
+      this.state.playlistName,
+      this.state.addTracks,
+      this.state.token
+    ).then(res => {
+      window.location.reload;
+    });
   };
 
   remove = track => {
