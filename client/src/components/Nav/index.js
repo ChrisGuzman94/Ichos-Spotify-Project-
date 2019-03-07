@@ -1,9 +1,11 @@
-import React from "react";
+import React, { Component } from "react";
 
-export default function Nav() {
-  return (
-    <nav className="navbar navbar-expand-lg navbar-light bg-light">
-      <button
+class Nav extends Component {
+  state = {};
+  render() {
+    return (
+      <nav className="navbar navbar-expand-lg navbar-light bg-light">
+        {/* <button
         className="navbar-toggler"
         type="button"
         data-toggle="collapse"
@@ -13,16 +15,23 @@ export default function Nav() {
         aria-label="Toggle navigation"
       >
         <span className="navbar-toggler-icon" />
-      </button>
-      <div className="collapse navbar-collapse" id="navbarNavDropdown">
-        <ul className="navbar-nav">
-          <li className="nav-item active">
-            <a className="nav-link" href="/">
+      </button> */}
+        <div
+          style={{ margin: "20px" }}
+          className="collapse navbar-collapse"
+          id="navbarNavDropdown"
+        >
+          {/* <ul style={{textDecoration: "none"}} className="navbar-nav">
+          <li className="nav-item active"> */}
+          {/* <a style={{color: "palevioletred", padding: "10px", alignContent: "right", textDecoration: "none", marginBottom: "10px"}} className="nav-link" href="/">
               Home
-            </a>
-          </li>
-        </ul>
-      </div>
-    </nav>
-  );
+            </a> */}
+          {/* </li>
+        </ul> */}
+        </div>
+      </nav>
+    );
+  }
 }
+
+export default Nav;

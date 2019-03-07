@@ -28,11 +28,35 @@ export default class Saved extends Component {
   render() {
     return (
       <div className="App">
+        <a
+          style={{
+            color: "palevioletred",
+            padding: "10px",
+            alignContent: "right",
+            textDecoration: "none",
+            margin: "10px"
+          }}
+          className="nav-link"
+          href="/"
+        >
+          {" "}
+          Home
+        </a>
         {this.state.events.map(event => {
           return (
             <Col>
               <Events name={event.name} url={event.img} link={event.link} />
-              <button onClick={() => this.handleDelete(event._id)}>
+              <button
+                style={{
+                  backgroundColor: "palevioletred",
+                  color: "white",
+                  borderStyle: "none",
+                  margin: "20px 10px",
+                  borderRadius: "12px",
+                  padding: "10px"
+                }}
+                onClick={() => this.handleDelete(event._id)}
+              >
                 Delete
               </button>
             </Col>

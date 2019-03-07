@@ -146,9 +146,121 @@ export default class Home extends Component {
   render() {
     return (
       <div className="App">
-        <a href="http://localhost:8000/"> Login to Spotify </a>
-        <a href="/saved"> Saved Events </a>
+        <a
+          style={{
+            color: "palevioletred",
+            padding: "10px",
+            alignContent: "right",
+            textDecoration: "none",
+            margin: "10px"
+          }}
+          className="nav-link"
+          href="/"
+        >
+          {" "}
+          Home
+        </a>
+        <a
+          style={{
+            color: "palevioletred",
+            padding: "10px",
+            alignContent: "right",
+            textDecoration: "none",
+            margin: "10px"
+          }}
+          href="https://authorizatio.herokuapp.com/"
+        >
+          {" "}
+          Login to Spotify{" "}
+        </a>
+        <a
+          style={{
+            color: "palevioletred",
+            padding: "10px",
+            alignContent: "right",
+            textDecoration: "none",
+            margin: "10px"
+          }}
+          href="/saved"
+        >
+          {" "}
+          Saved Events{" "}
+        </a>
         <Row>
+          <Col>
+            {this.state.loggedIn && (
+              <div>
+                <button
+                  style={{
+                    backgroundColor: "palevioletred",
+                    color: "white",
+                    borderStyle: "none",
+                    margin: "20px 10px",
+                    borderRadius: "12px",
+                    padding: "10px"
+                  }}
+                  onClick={() => this.getEvents()}
+                >
+                  Events
+                </button>
+                <button
+                  style={{
+                    backgroundColor: "palevioletred",
+                    color: "white",
+                    borderStyle: "none",
+                    margin: "20px 10px",
+                    borderRadius: "12px",
+                    padding: "10px"
+                  }}
+                  onClick={() => this.search()}
+                >
+                  Music
+                </button>
+                <button
+                  style={{
+                    backgroundColor: "palevioletred",
+                    color: "white",
+                    borderStyle: "none",
+                    margin: "20px 10px",
+                    borderRadius: "12px",
+                    padding: "10px"
+                  }}
+                  onClick={this.handleFormSubmit}
+                >
+                  Create Playlist
+                </button>
+                <input
+                  value={this.state.playlistName}
+                  name="playlistName"
+                  onChange={this.handleInputChange}
+                  type="text"
+                  placeholder="Playlist Name"
+                />
+                {this.state.addTracks.map(track => {
+                  return (
+                    <ul>
+                      <button
+                        style={{
+                          backgroundColor: "palevioletred",
+                          fontSize: "16px",
+                          color: "white",
+                          borderStyle: "none",
+                          borderRadius: "12px"
+                        }}
+                        onClick={() => this.remove(track)}
+                      >
+                        x{" "}
+                      </button>
+                      <a style={{ color: "palevioletred", padding: "0" }}>
+                        {" "}
+                        {track.trackName}{" "}
+                      </a>
+                    </ul>
+                  );
+                })}
+              </div>
+            )}
+          </Col>
           <Col md={6}>
             {this.state.tracks.map(track => {
               return (
@@ -165,38 +277,7 @@ export default class Home extends Component {
               );
             })}
           </Col>
-
-          <Col md={6}>
-            <div>
-              <p>Create your own playlist</p>
-              <form className="form">
-                <input
-                  value={this.state.playlistName}
-                  name="playlistName"
-                  onChange={this.handleInputChange}
-                  type="text"
-                  placeholder="Playlist Name"
-                />
-              </form>
-              <button onClick={this.handleFormSubmit}>Create Playlist</button>
-              {this.state.addTracks.map(track => {
-                return (
-                  <ul>
-                    <button onClick={() => this.remove(track)}>x </button>
-                    {track.trackName}
-                  </ul>
-                );
-              })}
-            </div>
-          </Col>
         </Row>
-
-        {this.state.loggedIn && (
-          <div>
-            <button onClick={() => this.search()}>Music</button>
-            <button onClick={() => this.getEvents()}>Events</button>
-          </div>
-        )}
 
         <Row>
           {this.state.events.map(event => {
@@ -208,13 +289,20 @@ export default class Home extends Component {
                   link={event.url}
                 />
                 <button
+                  style={{
+                    backgroundColor: "palevioletred",
+                    color: "white",
+                    borderStyle: "none",
+                    margin: "20px 10px",
+                    borderRadius: "12px",
+                    padding: "10px"
+                  }}
                   onClick={() =>
                     this.saveEvent(event.name, event.images[0].url, event.url)
                   }
                 >
                   Save
                 </button>
-                ;
               </Col>
             );
           })}

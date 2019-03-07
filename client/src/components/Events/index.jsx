@@ -3,7 +3,7 @@ import React, { Component } from "react";
 class Events extends Component {
   state = {
     style: {
-      height: 200,
+      height: 150,
       width: 200
     }
   };
@@ -11,9 +11,30 @@ class Events extends Component {
     return (
       <React.Fragment>
         <img style={this.state.style} src={this.props.url} alt="" />
-        <p>Event:{this.props.name}</p>
+        <p
+          style={{
+            color: "palevioletred",
+            padding: "10px",
+            alignContent: "right",
+            textDecoration: "none",
+            marginBottom: "10px"
+          }}
+        >
+          Event:{this.props.name}
+        </p>
         <p>
-          <a href={this.props.link}>See Event</a>
+          <a
+            style={{
+              color: "palevioletred",
+              padding: "10px",
+              alignContent: "right",
+              textDecoration: "none",
+              marginBottom: "10px"
+            }}
+            href={this.props.link}
+          >
+            See Event
+          </a>
         </p>
       </React.Fragment>
     );

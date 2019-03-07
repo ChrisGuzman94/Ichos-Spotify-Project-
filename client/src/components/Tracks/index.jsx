@@ -7,12 +7,37 @@ class Tracks extends Component {
     return (
       <div>
         <Col>
-          <button onClick={this.props.addTrack}>Add to playlist</button>
-          <button onClick={this.props.saveTrack}>Save to spotify</button>
+          <button
+            style={{
+              backgroundColor: "palevioletred",
+              color: "white",
+              borderStyle: "none",
+              margin: "20px 10px",
+              borderRadius: "12px",
+              padding: "10px"
+            }}
+            onClick={this.props.addTrack}
+          >
+            Add to playlist
+          </button>
+          <button
+            style={{
+              backgroundColor: "palevioletred",
+              color: "white",
+              borderStyle: "none",
+              margin: "20px 10px",
+              borderRadius: "12px",
+              padding: "10px"
+            }}
+            onClick={this.props.saveTrack}
+          >
+            Save to spotify
+          </button>
 
-          {this.props.name}
+          <a style={{ color: "palevioletred", padding: "10px" }}>
+            {this.props.name}
+          </a>
         </Col>
-        <Col />
       </div>
     );
   }
