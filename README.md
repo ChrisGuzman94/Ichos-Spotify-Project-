@@ -1,4 +1,4 @@
-###Ichos
+# Ichos
 
 Description:
 This aplication connects directly to the Spotify API, using exmamples from the authorization flow.
