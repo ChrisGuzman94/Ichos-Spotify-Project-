@@ -1,68 +1,79 @@
 import React, { Component } from "react";
-import Events from "../components/Events/index";
-import { Col } from "react-grid-system";
+import Jumbotron from "../components/Jumbotron";
+import Card from "../components/Card";
+import Song from "../components/Song";
+import Footer from "../components/Footer";
 import API from "../utils/API";
+import { Col, Row, Container } from "../components/Grid";
+import { List } from "../components/List";
+import Nav from "../components/Nav";
 
-export default class Saved extends Component {
+class Saved extends Component {
   state = {
-    events: []
+    songs: []
   };
 
   componentDidMount() {
-    this.savedEvents();
+    // this.getSavedBooks();
   }
 
-  savedEvents = () => {
-    API.getPlaylist()
-      .then(res => this.setState({ events: res.data }))
-      .catch(err => console.log(err));
-  };
+  getSavedBooks = () => {};
 
-  handleDelete = id => {
-    console.log(id);
-    API.removePlaylist(id)
-      .then(res => this.savedEvents())
-      .catch(err => console.log(err));
+  handleBookDelete = id => {
+    API.deleteBook(id).then(res => this.getSavedBooks());
   };
 
   render() {
     return (
-      <div className="App">
-        <a
-          style={{
-            color: "palevioletred",
-            padding: "10px",
-            alignContent: "right",
-            textDecoration: "none",
-            margin: "10px"
-          }}
-          className="nav-link"
-          href="/"
-        >
-          {" "}
-          Home
-        </a>
-        {this.state.events.map(event => {
-          return (
-            <Col>
-              <Events name={event.name} url={event.img} link={event.link} />
-              <button
-                style={{
-                  backgroundColor: "palevioletred",
-                  color: "white",
-                  borderStyle: "none",
-                  margin: "20px 10px",
-                  borderRadius: "12px",
-                  padding: "10px"
-                }}
-                onClick={() => this.handleDelete(event._id)}
-              >
-                Delete
-              </button>
-            </Col>
-          );
-        })}
-      </div>
+      <Container>
+        <Nav />
+        <Row>
+          <Col size="md-12">
+            <Jumbotron>
+              <h1 className="text-center">
+                <strong>Ichos GeoPlaylist</strong>
+              </h1>
+              <h2 className="text-center">
+                Save Some Songs You Can Jam To Later
+              </h2>
+            </Jumbotron>
+          </Col>
+        </Row>
+        <Row>
+          <Col size="md-12">
+            <Card title="Saved Songs" icon="download">
+              {this.state.songs.length ? (
+                <List>
+                  {this.state.songs.map(song => (
+                    <Song
+                      key={song._id}
+                      title={song.title}
+                      subtitle={song.subtitle}
+                      link={song.link}
+                      authors={song.authors.join(", ")}
+                      description={song.description}
+                      image={song.image}
+                      Button={() => (
+                        <button
+                          onClick={() => this.handleBookDelete(song._id)}
+                          className="btn btn-danger ml-2"
+                        >
+                          Delete
+                        </button>
+                      )}
+                    />
+                  ))}
+                </List>
+              ) : (
+                <h2 className="text-center">No Saved Songs</h2>
+              )}
+            </Card>
+          </Col>
+        </Row>
+        <Footer />
+      </Container>
     );
   }
 }
+
+export default Saved;

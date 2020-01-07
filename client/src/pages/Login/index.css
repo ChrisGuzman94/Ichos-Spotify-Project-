@@ -1,0 +1,151 @@
+body {
+  background: linear-gradient(
+    rgba(22, 22, 22, 0.989),
+    rgba(22, 22, 22, 0.95),
+    rgba(22, 22, 22, 0.989)
+  );
+  background-size: cover;
+  font-family: "Open Sans", sans-serif;
+}
+
+#main {
+  width: 300px;
+  height: 300px;
+  margin: 150px auto;
+}
+#main .loginfb {
+  width: 300px;
+  height: 30px;
+  background-color: #3b5999;
+  background: -moz-linear-gradient(top, #3b5999, #3b5999);
+  background: -ms-linear-gradient(top, #3b5999, #3b5999);
+  background: -webkit-linear-gradient(top, #3b5999, #3b5999);
+  border-radius: 20px;
+}
+#main .loginfb::after {
+  content: "Login with FaceBook";
+  color: #dfe0e6;
+  font-weight: 400;
+  font-size: 13px;
+  display: block;
+  margin-top: 10px;
+  padding-top: 7px;
+  text-align: center;
+}
+#main .linel {
+  width: 135px;
+  height: 1px;
+  background-color: rgba(240, 240, 240, 0.2);
+  margin-top: 30px;
+  float: left;
+}
+#main .linel::after {
+  content: "OR";
+  font-size: 13px;
+  color: rgba(240, 240, 240, 0.58);
+  position: absolute;
+  margin-left: 141px;
+  margin-top: -6px;
+}
+#main .liner {
+  width: 135px;
+  height: 1px;
+  background-color: rgba(240, 240, 240, 0.2);
+  margin-top: 30px;
+  float: right;
+}
+#main #form {
+  margin-top: 40px;
+}
+#main #form ::-webkit-input-placeholder {
+  /* WebKit browsers */
+  color: #88898c;
+}
+#main #form :-moz-placeholder {
+  /* Mozilla Firefox 4 to 18 */
+  color: #88898c;
+  opacity: 1;
+}
+#main #form ::-moz-placeholder {
+  /* Mozilla Firefox 19+ */
+  color: #88898c;
+  opacity: 1;
+}
+#main #form :-ms-input-placeholder {
+  /* Internet Explorer 10+ */
+  color: #88898c;
+}
+#main #form input[name="input"] {
+  width: 290px;
+  height: 25px;
+  background-color: rgba(46, 47, 51, 0.75);
+  border-radius: 3px;
+  padding-left: 10px;
+  color: #88898c;
+  font-size: 12px;
+  outline: none;
+  border: none;
+  margin-top: 15px;
+}
+#main #form input[name="input"]:focus {
+  background-color: #3c3c3c;
+}
+#main #form h5 {
+  color: #88898c;
+  font-size: 14px;
+  margin-top: 10px;
+  float: left;
+}
+
+#main #form input[name="login"] {
+  clear: both;
+  display: block;
+  margin: 50px auto;
+  width: 220px;
+  height: 80px;
+  outline: none;
+  border: none;
+  background-color: #7abd00;
+  border-radius: 30px;
+  color: RGBA(231, 252, 255, 1);
+  font-weight: 400;
+  font-size: 12px;
+  text-transform: uppercase;
+}
+#main #form .btn-toggle {
+  position: absolute;
+  margin-left: -9999px;
+  visibility: hidden;
+}
+#main #form .btn-toggle + label {
+  display: block;
+  position: relative;
+  float: right;
+  margin-top: 10px;
+  cursor: pointer;
+  outline: none;
+  user-select: none;
+}
+#main #form input.btn-toggle-round + label {
+  width: 30px;
+  padding: 4px;
+  height: 15px;
+  background-color: transparent;
+  border-radius: 10px;
+  cursor: default;
+}
+
+#main #form input.btn-toggle-round + label:after {
+  width: 20px;
+  background-color: #88898c;
+  border-radius: 100%;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+  transition: margin 0.4s cubic-bezier(0.5, 0.28, 0.7, 0.8);
+}
+
+#footer a {
+  text-decoration: none;
+  color: inherit;
+  display: block;
+  margin-top: 5px;
+}
