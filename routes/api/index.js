@@ -1,9 +1,12 @@
 const path = require("path");
 const router = require("express").Router();
 const songRoutes = require("./song");
+const login = require("./login");
 
-// Book routes
+//
 router.use("/songs", songRoutes);
+
+router.use("/login", login);
 
 // For anything else, render the html page
 router.use(function(req, res) {

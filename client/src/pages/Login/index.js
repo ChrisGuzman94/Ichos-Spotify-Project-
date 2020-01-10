@@ -1,9 +1,9 @@
 import React, { Component } from "react";
+import axios from "axios";
 import "./index.css";
 
 export default class Login extends Component {
   state = {};
-
   /**
    * Generates a random string containing numbers and letters
    * @param  {number} length The length of the string
@@ -21,20 +21,27 @@ export default class Login extends Component {
   };
 
   login = () => {
-    var stateKey = "spotify_auth_state";
-    var client_id = ""; // Your client id
-    var redirect_uri = "http://localhost:3000/search"; // Your redirect uri
-    var state = this.generateRandomString(16);
-    localStorage.setItem(stateKey, state);
-    var scope =
-      "playlist-modify-private playlist-modify-public user-library-modify";
-    var url = "https://accounts.spotify.com/authorize";
-    url += "?response_type=token";
-    url += "&client_id=" + encodeURIComponent(client_id);
-    url += "&scope=" + encodeURIComponent(scope);
-    url += "&redirect_uri=" + encodeURIComponent(redirect_uri);
-    url += "&state=" + encodeURIComponent(state);
-    window.location = url;
+    axios
+      .get("http://localhost:3001/api/login")
+      .then(res => {
+        var stateKey = "spotify_auth_state";
+        var client_id = res.data.client;
+        var redirect_uri = "http://localhost:3000/search"; // Your redirect uri
+        var state = this.generateRandomString(16);
+        localStorage.setItem(stateKey, state);
+        var scope =
+          "playlist-modify-private playlist-modify-public user-library-modify";
+        var url = "https://accounts.spotify.com/authorize";
+        url += "?response_type=token";
+        url += "&client_id=" + encodeURIComponent(client_id);
+        url += "&scope=" + encodeURIComponent(scope);
+        url += "&redirect_uri=" + encodeURIComponent(redirect_uri);
+        url += "&state=" + encodeURIComponent(state);
+        window.location = url;
+      })
+      .catch(function(error) {
+        console.log(error);
+      });
   };
 
   render() {

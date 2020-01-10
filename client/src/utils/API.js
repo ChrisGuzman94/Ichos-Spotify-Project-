@@ -3,6 +3,7 @@ const SpotifyWebApi = require("spotify-web-api-js");
 const SpotifyWebApiNode = require("spotify-web-api-node");
 const GetLocation = require("location-by-ip");
 const SPOTT_API_KEY = "hmuh6g1gh2mshFxd3xzReVIcYmKPp1IhBw8jsnaw0p7YjCPAqJ";
+const client_id = process.env.CLIENT;
 
 const spotifyApi = new SpotifyWebApi();
 const spotifyApiNode = new SpotifyWebApiNode();

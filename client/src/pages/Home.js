@@ -117,9 +117,7 @@ class Home extends Component {
               <h1 className="text-center">
                 <strong>Ichos GeoPlaylist</strong>
               </h1>
-              <h2 className="text-center">
-                Here Are Songs Based On Your Location
-              </h2>
+              <h2 className="text-center">Here Are Popular Songs Around You</h2>
             </Jumbotron>
           </Col>
         </Row>

@@ -4,6 +4,7 @@ import Home from "./pages/Home";
 import Saved from "./pages/Saved";
 import Login from "./pages/Login/index";
 import NoMatch from "./pages/NoMatch";
+require("dotenv").config();
 
 function App() {
   return (
